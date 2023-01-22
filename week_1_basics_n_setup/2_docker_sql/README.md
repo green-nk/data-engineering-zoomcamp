@@ -60,17 +60,16 @@ docker run -it \
   -e POSTGRES_USER="root" \
   -e POSTGRES_PASSWORD="root" \
   -e POSTGRES_DB="ny_taxi" \
-  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -v $(pwd)/data/db-data/ny_taxi:/var/lib/postgresql/data \
   -p 5432:5432 \
   postgres:13
 ```
-
 If you see that `ny_taxi_postgres_data` is empty after running
 the container, try these:
 
 * Deleting the folder and running Docker again (Docker will re-create the folder)
 * Adjust the permissions of the folder by running `sudo chmod a+rwx ny_taxi_postgres_data`
-
+* Changing the localhost port to others than `5432` such as `5431`.
 
 ### CLI for Postgres
 
@@ -92,6 +91,7 @@ Using `pgcli` to connect to Postgres
 ```bash
 pgcli -h localhost -p 5432 -u root -d ny_taxi
 ```
+Note that for port number, you should use port on your localhost as `pgcli` is a service on the host machine.
 
 
 ### NY Trips Dataset
@@ -111,6 +111,13 @@ $ aws s3 ls s3://nyc-tlc
                            PRE csv_backup/
                            PRE misc/
                            PRE trip data/
+```
+
+### Connect to postgresql via pandas
+
+Library needed on Mac M1
+```bash
+install psycopg2-binary --force-reinstall --no-cache-dir
 ```
 
 ### pgAdmin
@@ -146,6 +153,7 @@ docker run -it \
   --name pg-database \
   postgres:13
 ```
+Note that port number on the localhost should be changed if necessary.
 
 Run pgAdmin
 
@@ -155,27 +163,35 @@ docker run -it \
   -e PGADMIN_DEFAULT_PASSWORD="root" \
   -p 8080:80 \
   --network=pg-network \
-  --name pgadmin-2 \
+  --name pgadmin \
   dpage/pgadmin4
 ```
 
 
 ### Data ingestion
 
+Convert notebook to script
+
+```bash
+jupyter nbconvert --to=script upload-data.ipynb
+```
+
 Running locally
 
 ```bash
-URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
+export URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
 
 python ingest_data.py \
   --user=root \
-  --password=root \
   --host=localhost \
   --port=5432 \
-  --db=ny_taxi \
-  --table_name=yellow_taxi_trips \
-  --url=${URL}
+  --database=ny_taxi \
+  --table=yellow_taxi_trips \
+  --source=${URL}
 ```
+For database password, using `getpass` module to make the script more secure.
+
+Note that if you connect to the localhost, port number should be on the host machine as well.
 
 Build the image
 
@@ -202,18 +218,17 @@ You can solve it with `.dockerignore`:
 Run the script with Docker
 
 ```bash
-URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
+export URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
 
 docker run -it \
   --network=pg-network \
   taxi_ingest:v001 \
     --user=root \
-    --password=root \
     --host=pg-database \
     --port=5432 \
-    --db=ny_taxi \
-    --table_name=yellow_taxi_trips \
-    --url=${URL}
+    --database=ny_taxi \
+    --table=yellow_taxi_trips \
+    --source=${URL}
 ```
 
 ### Docker-Compose 
@@ -252,7 +267,7 @@ services:
       - ./data_pgadmin:/var/lib/pgadmin
     ...
 ```
-
+It's consider a best practice to use [volumes](https://docs.docker.com/storage/volumes/) rather than [bind mounts](https://docs.docker.com/storage/bind-mounts/) to create folders/files on demand if it does not exist yet.
 
 ### SQL 
 
