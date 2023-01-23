@@ -13,14 +13,15 @@
 
 For this course, we'll use a free version (upto EUR 300 credits). 
 
-1. Create an account with your Google email ID 
-2. Setup your first [project](https://console.cloud.google.com/) if you haven't already
+1. Create an account with your Google email ID
+2. Enable a billing account by signing up for a free trial
+3. Setup your first [project](https://console.cloud.google.com/) if you haven't already
     * eg. "DTC DE Course", and note down the "Project ID" (we'll use this later when deploying infra with TF)
-3. Setup [service account & authentication](https://cloud.google.com/docs/authentication/getting-started) for this project
+4. Setup [service account & authentication](https://cloud.google.com/docs/authentication/getting-started) for this project
     * Grant `Viewer` role to begin with.
     * Download service-account-keys (.json) for auth.
-4. Download [SDK](https://cloud.google.com/sdk/docs/quickstart) for local setup
-5. Set environment variable to point to your downloaded GCP keys:
+5. Download [SDK](https://cloud.google.com/sdk/docs/quickstart) for local setup
+6. Set environment variable to point to your downloaded GCP keys:
    ```shell
    export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
    
