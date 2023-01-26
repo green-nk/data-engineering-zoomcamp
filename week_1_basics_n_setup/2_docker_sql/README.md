@@ -193,6 +193,8 @@ For database password, using `getpass` module to make the script more secure.
 
 Note that if you connect to the localhost, port number should be on the host machine as well.
 
+Note that datetime column labels might be different between dataset.
+
 Build the image
 
 ```bash

@@ -22,6 +22,8 @@ if __name__ == "__main__":
     # Source args
     parser.add_argument("-s", "--source", dest="source", required=True, help="Link to source data")
     parser.add_argument("-c", "--chucksize", dest="chucksize", default=100000, help="Number of records to be loaded each time")
+    parser.add_argument("--datetime-labels", dest="datetime-labels", default=["tpep_pickup_datetime", "tpep_dropoff_datetime"], help="Datetime column names in the source")
+    parser.add_argument("--datetime-labels", dest="datetime-labels", nargs='+', default=["tpep_pickup_datetime", "tpep_dropoff_datetime"], help="Datetime column names in the source")
 
     # Postgresql connection args
     parser.add_argument("--host", dest="hostname", required=True, help="Postgresql host name")

@@ -50,8 +50,9 @@ def ingest_data(source_file, engine, config):
     From raw file ingested into the database.
     """
     # Load source data saved on disk onto memory
+    datetime_labels = config["datetime-labels"]
     chucksize = config["chucksize"]
-    df_iter = pd.read_csv(source_file, parse_dates=["tpep_pickup_datetime", "tpep_dropoff_datetime"], iterator=True, chunksize=chucksize)
+    df_iter = pd.read_csv(source_file, parse_dates=datetime_labels, iterator=True, chunksize=chucksize)
 
     # Insert each chuck of data into database
     table = config["table"]
