@@ -6,7 +6,7 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=ny_taxi
     volumes:
-      - ./data/db-data/ny_taxi:/var/lib/postgresql/data:rw
+      - db-data:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
   pgadmin:
@@ -15,9 +15,11 @@ services:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=root
     volumes:
-      - ./data/pgadmin-data:/var/lib/pgadmin
+      - pgadmin-data:/var/lib/pgadmin
     ports:
       - "8080:80"
+    depends_on:
+      - pgdatabase
 volumes:
-  ny_taxi:
+  db-data:
   pgadmin-data:
