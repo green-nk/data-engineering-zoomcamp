@@ -8,8 +8,12 @@ variable "project" {
 
 variable "region" {
   description = "Region for GCP resources. Choose as per your location: https://cloud.google.com/about/locations"
-  default = "europe-west6"
+  default = "asia-southeast1"
   type = string
+}
+
+variable "credentials" {
+  description = "GCP Service account key file location"
 }
 
 variable "storage_class" {
@@ -19,6 +23,6 @@ variable "storage_class" {
 
 variable "BQ_DATASET" {
   description = "BigQuery Dataset that raw data (from GCS) will be written to"
-  type = string
   default = "trips_data_all"
+  type = string
 }
