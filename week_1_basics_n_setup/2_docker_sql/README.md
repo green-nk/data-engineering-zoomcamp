@@ -230,6 +230,8 @@ docker run -it \
     --table=yellow_taxi_trips \
     --source=${URL}
 ```
+Note that if all jobs are in the same network, port number to be exposed on all jobs aren't necessary. 
+Port number is for local connection only.
 
 ### Docker-Compose 
 
