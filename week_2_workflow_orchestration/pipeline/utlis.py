@@ -1,8 +1,7 @@
 import pandas as pd
-from getpass import getpass
 from prefect import task
 from prefect.tasks import task_input_hash
-from sqlalchemy import create_engine
+from prefect_sqlalchemy import SqlAlchemyConnector
 
 
 @task(log_prints=True, retries=3)
@@ -33,33 +32,18 @@ def transform_data(raw_df):
 
 
 @task(log_prints=True, cache_key_fn=task_input_hash, cache_expiration=pd.Timedelta(days=1))
-def ingest_data(df, engine, config):
+def ingest_data(df, config):
     """
     From pre-processing file ingested into the database.
     """
-    # Insert each chuck of data into database
+    # Build a connection to Prefect block
+    block = config["block"]
     table = config["table"]
     chunksize = config["chunksize"]
 
+    conn = SqlAlchemyConnector.load(block)
+
+    # Insert each chuck of data into database
     print("Inserting into the database...")
-    df.to_sql(name=table, con=engine, if_exists="replace", index=True, index_label="_id", chunksize=chunksize)
-
-
-@task(log_prints=True, retries=3)
-def connect_db(username, hostname, port, database):
-    """
-    Build up connection string to create an database engine.
-    """
-    print("Connecting to database...")
-    password = getpass()
-
-    connection_string = f"postgresql://{username}:{password}@{hostname}:{port}/{database}"
-    engine = create_engine(connection_string)
-
-    # Test connection
-    try:
-        engine.connect()
-    except Exception as e:
-        raise Exception(e)
-        
-    return engine
+    with conn.get_connection(begin=False) as engine:
+        df.to_sql(name=table, con=engine, if_exists="replace", index=True, index_label="_id", chunksize=chunksize)
