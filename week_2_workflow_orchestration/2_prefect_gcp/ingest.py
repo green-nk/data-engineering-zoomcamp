@@ -1,3 +1,4 @@
+import io
 import pandas as pd
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
@@ -18,23 +19,8 @@ def main():
     raw_df = extract(source)
     df = transform(raw_df)
 
-    # Sub flow to save file to disk
-    file_path = save_file(df, data_file)
-
     destination = f"data/{color}/{data_file}.parquet"
-    load(file_path, destination)
-
-
-@flow(name="store data", log_prints=True)
-def save_file(df, data_file):
-    """
-    Save a parquet file to disk for visualization.
-    """
-    print("\tPersisting file onto a disk")
-    file_path = f"data/raw/{data_file}.parquet"
-    df.to_parquet(file_path, compression="gzip")
-
-    return file_path
+    load(df, destination)
 
 
 @task(log_prints=True, retries=3)
@@ -62,17 +48,22 @@ def transform(raw_df):
     return df
 
 
-@task(log_prints=True)
-def load(file_path, destination):
+@task(log_prints=True, retries=3)
+def load(df, destination):
     """
     Load transformed data to GCS.
     """
     # Build up Prefect GCS block
     conn = GcsBucket.load("gcs-data-lake")
     
+    # Create a buffer to store parquet file in memory
+    f = io.BytesIO()
+    df.to_parquet(f, compression="gzip")
+    f.seek(0)
+
     # Upload data to GCS
     print("Ingesting data to GCS...")
-    conn.upload_from_path(file_path, destination)
+    conn.upload_from_file_object(f, destination)
 
 
 if __name__ == "__main__":
