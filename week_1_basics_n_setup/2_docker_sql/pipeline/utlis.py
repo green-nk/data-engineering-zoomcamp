@@ -51,8 +51,8 @@ def ingest_data(source_file, engine, config):
     """
     # Load source data saved on disk onto memory
     datetime_labels = config["datetime-labels"]
-    chucksize = config["chucksize"]
-    df_iter = pd.read_csv(source_file, parse_dates=datetime_labels, iterator=True, chunksize=chucksize)
+    chunksize = config["chunksize"]
+    df_iter = pd.read_csv(source_file, parse_dates=datetime_labels, iterator=True, chunksize=chunksize)
 
     # Insert each chuck of data into database
     table = config["table"]
