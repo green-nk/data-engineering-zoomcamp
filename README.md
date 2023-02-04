@@ -141,6 +141,13 @@ Putting everything we learned to practice
 
 [More details](week_7_project)
 
+### Next Steps
+
+Learn additional concepts required to be a better data engineer
+* Database Concepts
+* Data Pipeline Concepts
+* Data Architecture Concepts
+
 
 ## Overview
 
@@ -190,7 +197,9 @@ For this course, you'll need to have the following software installed on your co
 
 See [Week 1](week_1_basics_n_setup) for more details about installing these tools
 
+## Additional Resources
 
+* [Data Engineering Wiki](https://dataengineering.wiki/Index)
 
 ## FAQ
 
