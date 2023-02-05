@@ -1,4 +1,3 @@
-import argparse
 from prefect import flow
 from utils import extract_from_source, load_to_lake, extract_from_lake, transform, load_to_warehouse
 
@@ -50,20 +49,7 @@ def to_bq(source, destination, file_path, config):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Ingest data from source to database")
+    # Accept parameter from main-deployment.yaml instead
+    config = dict()
 
-    # Source args
-    parser.add_argument("--taxi-color", dest="taxi-color", default="yellow", help="Color of NY taxi data to be extracted")
-    parser.add_argument("--years", dest="years", nargs='+', default=[2019], type=int, help="Years of NY taxi data to be extracted")
-    parser.add_argument("--months", dest="months", nargs='+', default=[1], type=int, help="Months of NY taxi data to be extracted")
-    
-    # Destination args
-    parser.add_argument("--data-lake", dest="data-lake", required=True, help="Block connection to represent a data lake")
-    parser.add_argument("--creds", dest="credentials", required=True, help="Block connection to represent GCP credentials")
-    parser.add_argument("--project-id", dest="project-id", required=True, help="Project ID in GCP to write data to")
-    parser.add_argument("--dataset", dest="dataset", required=True, help="Dataset in BQ to write data to")
-    parser.add_argument("--table", dest="table", required=True, help="Table in BQ to write data to")
-
-    args = parser.parse_args()
-    config = args.__dict__
     main(config)
