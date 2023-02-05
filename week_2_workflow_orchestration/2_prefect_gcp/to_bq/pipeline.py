@@ -55,7 +55,7 @@ def transform(df):
     return df
 
 
-@task(log_prints=True)
+@task(log_prints=True, retries=3)
 def load(df, destination, chunksize=100_000):
     """
     Load transformed data to BQ.
