@@ -15,7 +15,7 @@ def main():
     data_file = f"{color}_tripdata_{year}-{month:02d}"
     source = f"data/{color}/{data_file}.parquet"
 
-    file_path = f"../data/raw/{color}/{data_file}.parquet"
+    file_path = f"../../data/raw/{color}/{data_file}.parquet"
     df = extract(source, file_path)
 
     df = transform(df)
