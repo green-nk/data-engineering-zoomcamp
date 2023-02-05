@@ -1,6 +1,6 @@
 pandas==1.4.3
 sqlalchemy==1.4.39
-psycopg2==2.9.3
+psycopg2-binary==2.9.5
 prefect==2.7.10
 prefect-sqlalchemy==0.2.2
 prefect-gcp[cloud_storage]==0.2.5
