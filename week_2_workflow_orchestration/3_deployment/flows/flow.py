@@ -34,7 +34,7 @@ def to_gcs(source, destination, config):
     """
     Dump data from source into a data lake.
     """
-    raw_df = extract_from_source(source)
+    raw_df = extract_from_source(source, datetime_labels=["tpep_pickup_datetime", "tpep_dropoff_datetime"])
     load_to_lake(raw_df, destination, config)
 
 
@@ -45,7 +45,7 @@ def to_bq(source, destination, file_path, config):
     """
     raw_df = extract_from_lake(source, file_path, config)
     df = transform(raw_df)
-    load_to_warehouse(df, destination, config)
+    load_to_warehouse(df, destination, config, chunksize=100_000)
 
 
 if __name__ == "__main__":

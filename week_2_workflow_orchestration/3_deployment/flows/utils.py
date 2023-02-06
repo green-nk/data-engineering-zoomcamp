@@ -62,8 +62,8 @@ def transform(df):
     print("\tCreating a primary key")
     df = df.reset_index().rename({"index": "_id"}, axis=1)
 
-    print("\tImputing missing passenger count")
-    df["passenger_count"] = df["passenger_count"].fillna(-1)
+    print("\tCounting total number of rows")
+    print(f"Total number of records: {len(df)}")
     
     return df
 
