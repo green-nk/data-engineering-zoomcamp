@@ -8,21 +8,16 @@ version: 243512a3ca6716330ca05db7e5cf236d
 work_queue_name: default
 work_pool_name: null
 tags: []
-parameters:
-  config:
-    taxi-color: green
-    years:
-      - 2020
-    months:
-      - 11
-    data-lake: gcs-data-lake
-    credentials: gcs-data-lake-creds
-    project-id: dtc-de-375601
-    dataset: trips_data_all
-    table: rides
+parameters: {}
 schedule: null
-is_schedule_active: null
+is_schedule_active: true
 infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: Yellow NY Taxi Data Ingestion
+manifest_path: null
 infrastructure:
   type: process
   env: {}
@@ -31,17 +26,14 @@ infrastructure:
   command: null
   stream_output: true
   working_dir: null
+  _block_document_id: 5d77125c-e1cf-43c7-a623-c81188ad74ac
+  _block_document_name: anonymous-195452ba-56de-4241-b35d-4a7039c6e950
+  _is_anonymous: true
   block_type_slug: process
   _block_type_slug: process
-
-###
-### DO NOT EDIT BELOW THIS LINE
-###
-flow_name: Yellow NY Taxi Data Ingestion
-manifest_path: null
 storage:
-  repository: https://github.com/green-nk/data-engineering-zoomcamp.git
-  reference: null
+  repository: https://github.com/green-nk/data-engineering-zoomcamp/week_2_workflow_orchestration/3_deployment/flows
+  reference: main
   access_token: null
   include_git_objects: true
   _block_document_id: 56d3c240-0c0f-4410-8c6c-7d8bebf81785
@@ -61,4 +53,4 @@ parameter_openapi_schema:
   required:
   - config
   definitions: null
-timestamp: '2023-02-06T13:55:18.429737+00:00'
+timestamp: '2023-02-06T14:35:36.348256+00:00'
