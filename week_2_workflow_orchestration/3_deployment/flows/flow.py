@@ -26,7 +26,7 @@ def main(config):
             to_gcs(source, interim, config)
             
             file_path = f"../../data/raw/{data_file}.parquet"
-            to_bq(interim, destination, file_path, config)
+            # to_bq(interim, destination, file_path, config)
 
 
 @flow(name="Data dumping to GCS", log_prints=True)
@@ -34,7 +34,7 @@ def to_gcs(source, destination, config):
     """
     Dump data from source into a data lake.
     """
-    raw_df = extract_from_source(source, datetime_labels=["tpep_pickup_datetime", "tpep_dropoff_datetime"])
+    raw_df = extract_from_source(source, datetime_labels=["lpep_pickup_datetime", "lpep_dropoff_datetime"])
     load_to_lake(raw_df, destination, config)
 
 
