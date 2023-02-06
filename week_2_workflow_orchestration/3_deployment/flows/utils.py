@@ -6,7 +6,7 @@ from prefect_gcp.cloud_storage import GcsBucket
 from prefect.tasks import task_input_hash
 
 
-@task(log_prints=True, retries=3)
+@task(log_prints=True, retries=3, cache_key_fn=task_input_hash, cache_expiration=pd.Timedelta(days=1))
 def extract_from_source(source, datetime_labels=["tpep_pickup_datetime", "tpep_dropoff_datetime"]):
     """
     Load data from source into pandas DataFrame.
@@ -14,10 +14,13 @@ def extract_from_source(source, datetime_labels=["tpep_pickup_datetime", "tpep_d
     print("Loading data from source...")
     raw_df = pd.read_csv(source, parse_dates=datetime_labels)
 
+    print(f"\tChecking total number of rows")
+    print(f"Total number of rows: {len(raw_df)}")
+
     return raw_df
 
 
-@task(log_prints=True, retries=3)
+@task(log_prints=True, retries=3, cache_key_fn=task_input_hash, cache_expiration=pd.Timedelta(days=1))
 def load_to_lake(df, destination, config):
     """
     Load transformed data to GCS.
