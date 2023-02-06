@@ -9,8 +9,8 @@ def main():
     """
     Do ETL operation from source to GCS.
     """
-    color = "yellow"
-    year = 2021
+    color = "green"
+    year = 2020
     month = 1
 
     data_file = f"{color}_tripdata_{year}-{month:02d}"
@@ -29,7 +29,7 @@ def extract(source):
     Load data from source into pandas DataFrame.
     """
     print("Loading data from source...")
-    raw_df = pd.read_csv(source, parse_dates=["tpep_pickup_datetime", "tpep_dropoff_datetime"])
+    raw_df = pd.read_csv(source, parse_dates=["lpep_pickup_datetime", "lpep_dropoff_datetime"])
 
     return raw_df
 
