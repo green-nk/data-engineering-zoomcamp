@@ -51,14 +51,9 @@ Note that you can determine `--cron` or `--interval` to schedule a `deployment` 
 ```bash
 prefect deployment build ./flow.py:main -n "Yellow NY Taxi Data Ingestion" --cron "0 0 * * *" -a
 ```
+[crontab guru](https://crontab.guru/) is a guide to help build cron job.
 
-Note that in case you want to run with custom parameters.
-```bash
-prefect deployment build ./flow.py:main -n "Yellow NY Taxi Data Ingestion" \
-  -p '{"taxi-color": "yellow", "years": [2020], "months": [1], "data-lake": "gcs-data-lake", "credentials": "gcs-data-lake-creds", "project-id": "dtc-de-375601", "dataset": "trips_data_all", "table": "rides"}'
-```
-
-Or you can add custom parameters via UI.
+You can add custom parameters via UI.
 ```json
 {
   "taxi-color": "yellow", 
