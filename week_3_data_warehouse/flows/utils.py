@@ -28,9 +28,9 @@ def load_to_lake(raw_df, destination, config):
     gcs_block = config["data-lake"]
     conn = GcsBucket.load(gcs_block)
     
-    # Create a buffer to store parquet file in memory
+    # Create a buffer to store csv file in memory
     f = io.BytesIO()
-    raw_df.to_csv(f, compression="gzip")
+    raw_df.to_csv(f, index=False, compression="gzip")
     f.seek(0)
 
     # Upload data to GCS
