@@ -1,8 +1,17 @@
 -- create external table using fhv 2019 data
+-- CREATE OR REPLACE EXTERNAL TABLE `dtc-de-375601.trips.rides`
+-- OPTIONS (
+--   format = 'CSV', 
+--   uris = ['gs://dtc_data_lake_dtc-de-375601/data/fhv/fhv_tripdata_2019-*.csv.gz']
+-- );
+
+-- (optional) question 8: Using a more proper format in data lake such as parquet instead of csv.gz
+-- note that column types for all files used in an external table must have the same datatype
+-- you can check by counting on this external table
 CREATE OR REPLACE EXTERNAL TABLE `dtc-de-375601.trips.rides`
 OPTIONS (
-  format = 'CSV', 
-  uris = ['gs://dtc_data_lake_dtc-de-375601/data/fhv/fhv_tripdata_2019-*.csv.gz']
+  format = 'PARQUET', 
+  uris = ['gs://dtc_data_lake_dtc-de-375601/data/fhv/fhv_tripdata_2019-*.parquet']
 );
 
 -- create bq table using the previous created external table for fhv 2019 data
@@ -59,7 +68,3 @@ WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' AND '2019-03-31';
 
 -- question 7: Is it a best practice in big query to always cluster your data?
 -- Yes, it is. Besides, it's recommended to partition your data as well
-
--- (optional) question 8: Using a more proper format in data lake such as parquet instead of csv.gz
--- note that column types for all files used in an external table must have the same datatype
--- you can check by counting on this external table
