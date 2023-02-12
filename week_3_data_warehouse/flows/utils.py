@@ -16,11 +16,23 @@ def extract_from_source(source, datetime_labels=["tpep_pickup_datetime", "tpep_d
     print(f"\tChecking total number of rows")
     print(f"Total number of rows: {len(raw_df)}")
 
-    return raw_df
+    print(f"\tEnsuring data types in all columns")
+    data_types = {
+        "dispatching_base_num": "str", 
+        "PUlocationID": "float", 
+        "DOlocationID": "float", 
+        "SR_Flag": "float", 
+        "Affiliated_base_number": "str" 
+    }
+    
+    df = raw_df.astype(dtype=data_types)
+    print(df.dtypes)
+
+    return df
 
 
 @task(log_prints=True, retries=3, cache_key_fn=task_input_hash, cache_expiration=pd.Timedelta(days=1))
-def load_to_lake(raw_df, destination, config):
+def load_to_lake(df, destination, config):
     """
     Load raw data to GCS.
     """
@@ -30,7 +42,7 @@ def load_to_lake(raw_df, destination, config):
     
     # Create a buffer to store csv file in memory
     f = io.BytesIO()
-    raw_df.to_csv(f, index=False, compression="gzip")
+    df.to_parquet(f, index=False, compression="gzip")
     f.seek(0)
 
     # Upload data to GCS

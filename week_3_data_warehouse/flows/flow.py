@@ -17,7 +17,7 @@ def main(config):
             data_file = f"{color}/{color}_tripdata_{year}-{month:02d}"
 
             source = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{data_file}.csv.gz"
-            destination = f"data/{data_file}.csv.gz"
+            destination = f"data/{data_file}.parquet"
             to_gcs(source, destination, config)
 
 
