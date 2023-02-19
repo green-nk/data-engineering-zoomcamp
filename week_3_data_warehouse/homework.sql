@@ -67,4 +67,4 @@ WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' AND '2019-03-31';
 -- if external table source is from GCS, the storage of that table is also GCS
 
 -- question 7: Is it a best practice in big query to always cluster your data?
--- Yes, it is. Besides, it's recommended to partition your data as well
+-- No, it isn't. according to the video, if your data is less than 1 GB, it may not offset the cost of storing some metadata.
