@@ -1,7 +1,7 @@
 ###
 ### A complete description of a Prefect Deployment for flow 'FHV NY Taxi Data Ingestion'
 ###
-name: FHV HW Deployment
+name: NY Taxi Data Ingestion Deployment
 description: Main ETL flow from source to a data lake.
 version: fd7584257242725e944216661b19ffec
 # The work queue that will handle this deployment's runs
@@ -44,7 +44,7 @@ infrastructure:
 ###
 ### DO NOT EDIT BELOW THIS LINE
 ###
-flow_name: FHV NY Taxi Data Ingestion
+flow_name: NY Taxi Data Ingestion
 manifest_path: null
 storage: null
 path: /Users/green/courses/data-engineering-zoomcamp/week_3_data_warehouse/flows
