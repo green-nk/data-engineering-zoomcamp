@@ -26,14 +26,14 @@
 <u>Schema</u>
 ```python
 data_types = {
-    "VendorID": "float", 
-    "passenger_count": "float", 
+    "VendorID": "int", 
+    "passenger_count": "int", 
     "trip_distance": "float", 
-    "RatecodeID": "float", 
+    "RatecodeID": "int", 
     "store_and_fwd_flag": "str", 
-    "PULocationID": "float", 
-    "DOLocationID": "float", 
-    "payment_type": "float", 
+    "PULocationID": "int", 
+    "DOLocationID": "int", 
+    "payment_type": "int", 
     "fare_amount": "float", 
     "extra": "float", 
     "mta_tax": "float", 
@@ -44,6 +44,7 @@ data_types = {
     "congestion_surcharge": "float", 
 }
 ```
+Note that `float` dtype is needed instead of `int`, if a column is contained `NaN` value.
 Note that `tpep_pickup_datetime` and `tpep_dropoff_datetime` are `datetime` dtype.
 
 
@@ -53,14 +54,14 @@ Note that `tpep_pickup_datetime` and `tpep_dropoff_datetime` are `datetime` dtyp
 <u>Schema</u>
 ```python
 data_types = {
-    "VendorID": "float", 
-    "passenger_count": "float", 
+    "VendorID": "int", 
+    "passenger_count": "int", 
     "trip_distance": "float", 
-    "RatecodeID": "float", 
+    "RatecodeID": "int", 
     "store_and_fwd_flag": "str", 
-    "PULocationID": "float", 
-    "DOLocationID": "float", 
-    "payment_type": "float", 
+    "PULocationID": "int", 
+    "DOLocationID": "int", 
+    "payment_type": "int", 
     "fare_amount": "float", 
     "extra": "float", 
     "mta_tax": "float", 
@@ -70,7 +71,7 @@ data_types = {
     "total_amount": "float", 
     "congestion_surcharge": "float", 
     "ehail_fee": "float", 
-    "trip_type": "str"
+    "trip_type": "int"
 }
 ```
 Note that `lpep_pickup_datetime` and `lpep_dropoff_datetime` are `datetime` dtype.
@@ -83,9 +84,9 @@ Note that `lpep_pickup_datetime` and `lpep_dropoff_datetime` are `datetime` dtyp
 ```python
 data_types = {
     "dispatching_base_num": "str", 
-    "PUlocationID": "float", 
-    "DOlocationID": "float", 
-    "SR_Flag": "float", 
+    "PUlocationID": "int", 
+    "DOlocationID": "int", 
+    "SR_Flag": "int", 
     "Affiliated_base_number": "str"
 }
 ```
@@ -98,7 +99,7 @@ Note that `pickup_datetime` and `dropOff_datetime` are `datetime` dtype.
 <u>Schema</u>
 ```python
 data_types = {
-    "LocationID": "float", 
+    "LocationID": "int", 
     "Borough": "str", 
     "Zone": "str", 
     "service_zone": "str"
