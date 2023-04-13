@@ -60,6 +60,8 @@ Make sure that your graph is clear to understand by adding references and titles
 
 Example of a dashboard: ![image](https://user-images.githubusercontent.com/4315804/159771458-b924d0c1-91d5-4a8a-8c34-f36c25c31a3c.png)
 
+Link to project:
+- Basic End-to-End Batch Processing Data Pipeline Project: [NYC Citi Bike](https://github.com/green-nk/nyc-citi-bike)
 
 ## Peer review criteria
 
